@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { PaginaInicialComponent } from './template/pagina-inicial/pagina-inicial.component';
+
+const routes: Routes = [
+  {path: "", component: PaginaInicialComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
