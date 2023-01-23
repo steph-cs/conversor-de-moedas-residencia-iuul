@@ -27,26 +27,23 @@ export class ListarSimbolosComponent implements OnInit {
   @ViewChild(MatSort) sort: any = MatSort;
 
   simbolos: any;
-  array:any;
   constructor(private api: SimbolosConversaoService) {
 
   }
 
   ngOnInit() {
     this.api.getSimbolos()
-    .subscribe(response => {
-      this.simbolos = response;
-      this.simbolos = this.simbolos.symbols
-      this.array = Object.values(this.simbolos)
-      this.dataSource = new MatTableDataSource(this.array);
-      this.load()
-    });
-    
-  }
+      .subscribe(response => {
+        this.simbolos = response;
+        this.simbolos = this.simbolos.symbols
+        this.simbolos = Object.values(this.simbolos)
+        this.dataSource = new MatTableDataSource(this.simbolos);
+  
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
-  load() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      });
+
   }
 
   applyFilter(event: Event) {
