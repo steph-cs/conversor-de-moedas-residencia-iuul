@@ -15,8 +15,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSortModule } from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
 
 import {FormsModule} from '@angular/forms';
+import { ConversaoMoedasComponent } from './template/conversao-moedas/conversao-moedas.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {FormsModule} from '@angular/forms';
     NavbarComponent,
     FooterComponent,
     PaginaInicialComponent,
-    ListarSimbolosComponent
+    ListarSimbolosComponent,
+    ConversaoMoedasComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import {FormsModule} from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
