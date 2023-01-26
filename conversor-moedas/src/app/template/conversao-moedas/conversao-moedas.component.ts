@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimbolosConversaoService } from 'src/app/service/simbolos-conversao.service';
+import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
 
 @Component({
   selector: 'app-conversao-moedas',
@@ -9,8 +9,9 @@ import { SimbolosConversaoService } from 'src/app/service/simbolos-conversao.ser
 export class ConversaoMoedasComponent implements OnInit {
 
   simbolos: any;
+  resConversao: any;
 
-  constructor(private api: SimbolosConversaoService) {
+  constructor(private api: ApiConversaoMoedas) {
 
   }
 
@@ -24,4 +25,15 @@ export class ConversaoMoedasComponent implements OnInit {
 
   }
 
+  converterMoeda() {
+    const moedaOrigem = (<HTMLInputElement>document.getElementById("moeda-origem")).value;
+    const moedaDestino = (<HTMLInputElement>document.getElementById("moeda-destino")).value;
+    const valor = (<HTMLInputElement>document.getElementById("valor")).value
+
+    this.api.converterMoeda(valor, moedaOrigem, moedaDestino)
+      .subscribe(response => {
+        this.resConversao = response;
+        this.resConversao = { rate: this.resConversao.info.rate, result: this.resConversao.result };
+      });
+  }
 }
