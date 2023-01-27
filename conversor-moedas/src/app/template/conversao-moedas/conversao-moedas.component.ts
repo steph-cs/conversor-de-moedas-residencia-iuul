@@ -29,11 +29,13 @@ export class ConversaoMoedasComponent implements OnInit {
     const moedaOrigem = (<HTMLInputElement>document.getElementById("moeda-origem")).value;
     const moedaDestino = (<HTMLInputElement>document.getElementById("moeda-destino")).value;
     const valor = (<HTMLInputElement>document.getElementById("valor")).value
-
-    this.api.converterMoeda(valor, moedaOrigem, moedaDestino)
-      .subscribe(response => {
-        this.resConversao = response;
-        this.resConversao = { rate: this.resConversao.info.rate, result: this.resConversao.result };
-      });
+    if (valor) {
+      this.api.converterMoeda(valor, moedaOrigem, moedaDestino)
+        .subscribe(response => {
+          this.resConversao = response;
+          this.resConversao = { valor: valor, moedaDestino: moedaDestino, moedaOrigem: moedaOrigem, rate: this.resConversao.info.rate, result: this.resConversao.result };
+          console.log(this.resConversao)
+        });
+    }
   }
 }
