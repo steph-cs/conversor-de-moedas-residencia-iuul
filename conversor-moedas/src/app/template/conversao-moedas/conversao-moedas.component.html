@@ -3,12 +3,13 @@
   <form class="d-flex flex-column align-items-center w-100">
     <div class="d-flex justify-content-around align-items-center flex-wrap w-100">
       <div class="mb-3 col-12 col-md-2">
-        <label for="valor" class="form-label">Valor</label>
+        <label for="valor" class="form-label">Valor <span class="text-danger">*</span></label>
         <input type="number" min="0.01" class="form-control rounded-pill w-" id="valor" placeholder="0,01">
+  
       </div>
       <div class="mb-3 col-12 col-md-4">
         <label for="moeda-origem" class="form-label">Moeda Origem</label>
-        <select class="form-select rounded-pill" id="moeda-origem">
+        <select class="form-select rounded-pill" id="moeda-origem" >
           <option *ngFor="let simbolo of simbolos" value="{{simbolo.code}}" [selected]="simbolo.code == 'BRL'">
             {{simbolo.description}} ({{simbolo.code}})</option>
         </select>
@@ -28,7 +29,7 @@
         </select>
       </div>
     </div>
-
+    <span id="valor-error" class="text-danger d-none">* O número inserido é menor ou igual a 0! Preencha um número válido.</span>
     <button class="btn btn-success mt-2" (click)="converterMoeda()">Converter</button>
   </form>
 
@@ -36,5 +37,6 @@
     <p id="valor-origem">{{resConversao.valor}} {{resConversao.moedaOrigem}}</p>
     <h2 class="text-primary fs-2 fw-bold" id=" valor-destino">{{resConversao.result}} {{resConversao.moedaDestino}} </h2>
     <p>taxa de conversão: <span class="text-danger" id="rate">{{resConversao.rate}}</span></p>
+    <button class="btn btn-warning" mt-2 (click)="fecharResultadoConversao()">Fechar</button>
   </div>
 </div>

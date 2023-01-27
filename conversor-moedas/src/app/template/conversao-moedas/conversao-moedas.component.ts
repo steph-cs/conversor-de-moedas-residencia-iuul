@@ -34,8 +34,22 @@ export class ConversaoMoedasComponent implements OnInit {
         .subscribe(response => {
           this.resConversao = response;
           this.resConversao = { valor: valor, moedaDestino: moedaDestino, moedaOrigem: moedaOrigem, rate: this.resConversao.info.rate, result: this.resConversao.result };
-          console.log(this.resConversao)
         });
     }
+    this.showError(valor)
+  }
+
+  showError(valor: string | null) {
+    const valorError = document.getElementById("valor-error")
+    if (!valor) {
+      valorError?.classList.remove("d-none")
+    }else{
+      valorError?.classList.add("d-none")
+    }
+
+  }
+
+  fecharResultadoConversao(){
+    this.resConversao = null
   }
 }
