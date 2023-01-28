@@ -18,7 +18,7 @@
 
       <!-- valor Column -->
       <ng-container matColumnDef="valor">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> valor </th>
+        <th mat-header-cell *matHeaderCellDef> valor </th>
         <td mat-cell *matCellDef="let row"> {{row.valor}} </td>
       </ng-container>
 
@@ -36,7 +36,7 @@
 
       <!-- result Column -->
       <ng-container matColumnDef="result">
-        <th mat-header-cell *matHeaderCellDef> Resultado </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Resultado </th>
         <td mat-cell *matCellDef="let row"> {{row.result}} </td>
       </ng-container>
 
