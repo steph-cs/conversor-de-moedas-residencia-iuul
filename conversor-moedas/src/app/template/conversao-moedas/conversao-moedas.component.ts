@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
+import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
 @Component({
   selector: 'app-conversao-moedas',
@@ -11,7 +12,7 @@ export class ConversaoMoedasComponent implements OnInit {
   simbolos: any;
   resConversao: any;
 
-  constructor(private api: ApiConversaoMoedas) {
+  constructor(private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
 
   }
 
@@ -33,7 +34,17 @@ export class ConversaoMoedasComponent implements OnInit {
       this.api.converterMoeda(valor, moedaOrigem, moedaDestino)
         .subscribe(response => {
           this.resConversao = response;
-          this.resConversao = { valor: valor, moedaDestino: moedaDestino, moedaOrigem: moedaOrigem, rate: this.resConversao.info.rate, result: this.resConversao.result };
+          let data = new Date()
+          this.resConversao = {
+            data: data.toLocaleDateString(),
+            hora: data.toLocaleTimeString(),
+            valor: valor, 
+            moedaOrigem: moedaOrigem, 
+            moedaDestino: moedaDestino,
+            rate: this.resConversao.info.rate, result: this.resConversao.result 
+          };
+          //add conversao ao historico
+          this.addHistoricoConversao()
         });
     }
     this.showError(valor)
@@ -51,5 +62,9 @@ export class ConversaoMoedasComponent implements OnInit {
 
   fecharResultadoConversao(){
     this.resConversao = null
+  }
+
+  addHistoricoConversao(){
+    this.historicoConversao.addConversao(this.resConversao)
   }
 }
