@@ -3,6 +3,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
 
@@ -27,8 +28,8 @@ export class HistoricoConversaoComponent implements AfterViewInit {
     'data',
     'hora',
     'valor',
-    'moedaDestino',
     'moedaOrigem',
+    'moedaDestino',
     'result',
     'rate'
   ];
@@ -40,7 +41,7 @@ export class HistoricoConversaoComponent implements AfterViewInit {
 
 
 
-  constructor(private historicoConversao: HistoricoConversaoService) {
+  constructor(private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
     this.getHistorico()
   }
 
@@ -48,12 +49,12 @@ export class HistoricoConversaoComponent implements AfterViewInit {
     let historico = this.historicoConversao.getHistorico()
     if (historico) {
       this.dataSource = new MatTableDataSource(historico)
-    }else{
+    } else {
       this.dataSource = new MatTableDataSource([])
-      
+
     }
   }
-  
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -68,6 +69,21 @@ export class HistoricoConversaoComponent implements AfterViewInit {
     this.getHistorico()
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  verificarAltoValorConvertido(moeda: string, valor: number) {
+    let maior : boolean = valor > 10000;
+    if (moeda != "USD") {
+      var res: any;
+      this.api.converterMoeda(valor.toString(), moeda, "USD")
+        .subscribe(response => {
+          res = response
+          if (res.result > 10000) {
+            maior = true
+          }
+        });
+    }
+    return maior
   }
 
 }
