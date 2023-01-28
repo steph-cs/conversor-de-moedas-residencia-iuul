@@ -19,6 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
 
 import {FormsModule} from '@angular/forms';
 import { ConversaoMoedasComponent } from './template/conversao-moedas/conversao-moedas.component';
+import { HistoricoConversaoComponent } from './template/historico-conversao/historico-conversao.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ConversaoMoedasComponent } from './template/conversao-moedas/conversao-
     FooterComponent,
     PaginaInicialComponent,
     ListarSimbolosComponent,
-    ConversaoMoedasComponent
+    ConversaoMoedasComponent,
+    HistoricoConversaoComponent
   ],
   imports: [
     BrowserModule,
