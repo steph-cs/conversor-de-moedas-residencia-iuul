@@ -15,11 +15,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSortModule } from '@angular/material/sort';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ConversaoMoedasComponent } from './template/conversao-moedas/conversao-moedas.component';
 import { HistoricoConversaoComponent } from './template/historico-conversao/historico-conversao.component';
+
+import { ModalExcluirHistoricoComponent } from './template/historico-conversao/modal-excluir-historico/modal-excluir-historico.component';
+import { ModalExcluirConversaoComponent } from './template/historico-conversao/modal-excluir-conversao/modal-excluir-conversao.component';
+import { SnackBarExclusaoComponent } from './template/historico-conversao/snack-bar-exclusao/snack-bar-exclusao.component';
+import { SnackBarConversaoComponent } from './template/conversao-moedas/snack-bar-conversao/snack-bar-conversao.component';
 
 
 @NgModule({
@@ -30,7 +37,11 @@ import { HistoricoConversaoComponent } from './template/historico-conversao/hist
     PaginaInicialComponent,
     ListarSimbolosComponent,
     ConversaoMoedasComponent,
-    HistoricoConversaoComponent
+    HistoricoConversaoComponent,
+    ModalExcluirHistoricoComponent,
+    ModalExcluirConversaoComponent,
+    SnackBarExclusaoComponent,
+    SnackBarConversaoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +54,9 @@ import { HistoricoConversaoComponent } from './template/historico-conversao/hist
     MatInputModule,
     MatSortModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

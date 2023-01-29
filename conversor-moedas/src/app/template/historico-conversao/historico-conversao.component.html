@@ -1,6 +1,6 @@
 
 <div class="container mt-5 mb-5 "  *ngIf="dataSource.data.length > 0">
-  <button class="btn btn-danger mt-2" href="/converterMoedas" (click)="delHistorico()">Deletar histórico</button>
+  <button class="btn btn-danger mt-2" href="/converterMoedas" (click)="openDialogExcluirHistorico()">Excluir histórico</button>
   <div class="mat-elevation-z8 mt-3" style="overflow-x:auto;" >
     <table mat-table [dataSource]="dataSource" matSort class="w-100" id="tab" >
 
@@ -37,7 +37,7 @@
       <!-- result Column -->
       <ng-container matColumnDef="result">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Resultado </th>
-        <td mat-cell *matCellDef="let row" [id]="'res' + dataSource.data.indexOf(row)" > {{row.result}}
+        <td mat-cell *matCellDef="let row" [id]="'res' + dataSource.data.indexOf(row)" > {{row.result}} <i *ngIf="row.moedaDestino == 'USD' && row.result > 10000" title="Valor convertido maior que 10.000 USD" class="bi bi-exclamation-diamond-fill text-warning"></i>
         </td>
       </ng-container>
 
@@ -47,12 +47,21 @@
         <td mat-cell *matCellDef="let row"> {{row.rate}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="excluir">
+        <th mat-header-cell *matHeaderCellDef> Excluir </th>
+        <td mat-cell *matCellDef="let row"> 
+          <button (click)="openDialogExcluirConversao(dataSource.data.indexOf(row))" type="button" class="btn btn-secondary">
+            <i class="bi bi-trash3"></i> 
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
   </div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator (page)="verificarAltoValorConvertido()" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
 
 <div class=" h-50 d-flex flex-column align-items-center justify-content-center" *ngIf="dataSource.data.length == 0">

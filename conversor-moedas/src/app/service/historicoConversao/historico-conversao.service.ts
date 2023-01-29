@@ -31,16 +31,15 @@ export class HistoricoConversaoService {
     localStorage.setItem("historicoConversao", json)
   }
 
-  delConversao(conversao: string) {
+  delConversao(index: number) {
     var historico = []
     var json: any;
     if (localStorage["historicoConversao"]) {
       json = localStorage.getItem("historicoConversao")
       historico = JSON.parse(json)
     }
-    const index = historico.indexOf(conversao);
-    if (index > -1) { // only splice array when item is found
-      historico.splice(index, 1); // 2nd parameter means remove one item only
+    if (index > -1) {
+      historico.splice(index, 1);
     }
     json = JSON.stringify(historico)
     localStorage.setItem("historicoConversao", json)
