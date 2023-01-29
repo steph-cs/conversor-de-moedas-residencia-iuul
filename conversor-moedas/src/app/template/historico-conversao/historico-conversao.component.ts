@@ -3,7 +3,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
+import { ApiConversaoMoedasService } from 'src/app/service/api-conversao-moedas.service';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -46,7 +46,7 @@ export class HistoricoConversaoComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: any = MatSort;
 
 
-  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
+  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, private api: ApiConversaoMoedasService, private historicoConversao: HistoricoConversaoService) {
     this.getHistorico()
   }
 

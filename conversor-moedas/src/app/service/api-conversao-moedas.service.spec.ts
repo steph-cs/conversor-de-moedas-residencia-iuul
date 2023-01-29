@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiConversaoMoedas } from './api-conversao-moedas';
+import { ApiConversaoMoedasService } from './api-conversao-moedas.service';
 
-describe('ApiConversaoMoedas', () => {
+describe('ApiConversaoMoedasService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
-    providers: [ApiConversaoMoedas]
+    providers: [ApiConversaoMoedasService]
   }));
 
   it('should be created', () => {
-    const service: ApiConversaoMoedas = TestBed.get(ApiConversaoMoedas);
+    const service: ApiConversaoMoedasService = TestBed.get(ApiConversaoMoedasService);
     expect(service).toBeTruthy();
   });
 
   it('should have getData function', () => {
-    const service: ApiConversaoMoedas = TestBed.get(ApiConversaoMoedas);
+    const service: ApiConversaoMoedasService = TestBed.get(ApiConversaoMoedasService);
     expect(service.getSimbolos).toBeTruthy();
   });
 

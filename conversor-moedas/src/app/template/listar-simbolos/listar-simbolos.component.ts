@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
+import { ApiConversaoMoedasService } from 'src/app/service/api-conversao-moedas.service';
 
 export interface Simbolos {
   code: string;
@@ -27,7 +27,7 @@ export class ListarSimbolosComponent implements OnInit {
   @ViewChild(MatSort) sort: any = MatSort;
 
   simbolos: any;
-  constructor(private api: ApiConversaoMoedas) {
+  constructor(private api: ApiConversaoMoedasService) {
 
   }
 

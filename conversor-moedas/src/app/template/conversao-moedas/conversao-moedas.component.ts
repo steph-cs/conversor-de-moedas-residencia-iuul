@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
+import { ApiConversaoMoedasService } from 'src/app/service/api-conversao-moedas.service';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarConversaoComponent } from './snack-bar-conversao/snack-bar-conversao.component';
 
 
@@ -16,7 +16,7 @@ export class ConversaoMoedasComponent implements OnInit {
   simbolos: any;
   resConversao: any;
 
-  constructor(private _snackBar: MatSnackBar, private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
+  constructor(private _snackBar: MatSnackBar, private api: ApiConversaoMoedasService, private historicoConversao: HistoricoConversaoService) {
 
   }
 
@@ -68,17 +68,17 @@ export class ConversaoMoedasComponent implements OnInit {
     const valorError = document.getElementById("valor-error")
     if (!valor) {
       valorError?.classList.remove("d-none")
-    }else{
+    } else {
       valorError?.classList.add("d-none")
     }
 
   }
 
-  fecharResultadoConversao(){
+  fecharResultadoConversao() {
     this.resConversao = null
   }
 
-  addHistoricoConversao(){
+  addHistoricoConversao() {
     this.historicoConversao.addConversao(this.resConversao)
   }
 }
