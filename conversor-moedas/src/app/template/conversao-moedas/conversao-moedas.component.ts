@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ApiConversaoMoedas } from 'src/app/service/api-conversao-moedas';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { SnackBarConversaoComponent } from './snack-bar-conversao/snack-bar-conversao.component';
+
+
 @Component({
   selector: 'app-conversao-moedas',
   templateUrl: './conversao-moedas.component.html',
@@ -12,7 +16,7 @@ export class ConversaoMoedasComponent implements OnInit {
   simbolos: any;
   resConversao: any;
 
-  constructor(private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
+  constructor(private _snackBar: MatSnackBar, private api: ApiConversaoMoedas, private historicoConversao: HistoricoConversaoService) {
 
   }
 
@@ -38,16 +42,26 @@ export class ConversaoMoedasComponent implements OnInit {
           this.resConversao = {
             data: data.toLocaleDateString(),
             hora: data.toLocaleTimeString(),
-            valor: valor, 
-            moedaOrigem: moedaOrigem, 
+            valor: valor,
+            moedaOrigem: moedaOrigem,
             moedaDestino: moedaDestino,
-            rate: this.resConversao.info.rate, result: this.resConversao.result 
+            rate: this.resConversao.info.rate, result: this.resConversao.result
           };
           //add conversao ao historico
           this.addHistoricoConversao()
+          //msg confirmando conversao
+          this.openSnackBar()
         });
     }
     this.showError(valor)
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(SnackBarConversaoComponent, {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: 5000,
+    });
   }
 
   showError(valor: string | null) {
