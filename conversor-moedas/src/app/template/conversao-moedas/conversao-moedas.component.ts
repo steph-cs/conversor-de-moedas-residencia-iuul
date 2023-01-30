@@ -34,7 +34,7 @@ export class ConversaoMoedasComponent implements OnInit {
     const moedaOrigem = (<HTMLInputElement>document.getElementById("moeda-origem")).value;
     const moedaDestino = (<HTMLInputElement>document.getElementById("moeda-destino")).value;
     const valor = (<HTMLInputElement>document.getElementById("valor")).value
-    if (valor) {
+    if (Number(valor) > 0) {
       this.api.converterMoeda(valor, moedaOrigem, moedaDestino)
         .subscribe(response => {
           this.resConversao = response;
@@ -66,7 +66,7 @@ export class ConversaoMoedasComponent implements OnInit {
 
   showError(valor: string | null) {
     const valorError = document.getElementById("valor-error")
-    if (!valor) {
+    if (!valor || Number(valor) <= 0) {
       valorError?.classList.remove("d-none")
     } else {
       valorError?.classList.add("d-none")
