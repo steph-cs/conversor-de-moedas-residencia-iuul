@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IHistoricoConversao } from 'src/app/interface/IHistoricoConversao';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,16 @@ export class HistoricoConversaoService {
 
   }
 
-  getHistorico() {
-    var historico: any;
+  getHistorico() : IHistoricoConversao[] {
+    var historico: IHistoricoConversao[];
     var json: any;
     json = localStorage.getItem("historicoConversao")
     historico = JSON.parse(json)
     return historico
   }
 
-  addConversao(conversao: object) {
-    var historico = []
+  addConversao(conversao: IHistoricoConversao) {
+    var historico : IHistoricoConversao[] = []
     var json: any;
     if (localStorage["historicoConversao"]) {
       json = localStorage.getItem("historicoConversao")
@@ -32,7 +33,7 @@ export class HistoricoConversaoService {
   }
 
   delConversao(index: number) {
-    var historico = []
+    var historico: IHistoricoConversao[] = []
     var json: any;
     if (localStorage["historicoConversao"]) {
       json = localStorage.getItem("historicoConversao")

@@ -3,7 +3,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiConversaoMoedasService } from 'src/app/service/api-conversao-moedas.service';
+import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-conversao-moedas.service';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -11,16 +11,7 @@ import { ModalExcluirHistoricoComponent } from './modal-excluir-historico/modal-
 import { ModalExcluirConversaoComponent } from './modal-excluir-conversao/modal-excluir-conversao.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarExclusaoComponent } from './snack-bar-exclusao/snack-bar-exclusao.component';
-
-export interface Historico {
-  data: string;
-  hora: string;
-  valor: string;
-  moedaOrigem: string;
-  moedaDestino: string;
-  result: number;
-  rate: number;
-}
+import { IHistoricoConversao } from 'src/app/interface/IHistoricoConversao';
 
 @Component({
   selector: 'app-historico-conversao',
@@ -40,11 +31,11 @@ export class HistoricoConversaoComponent implements AfterViewInit {
     'excluir'
   ];
 
-  dataSource: any
+  historico : IHistoricoConversao[] = []
+  dataSource: MatTableDataSource<IHistoricoConversao> = new MatTableDataSource(this.historico);
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
-
 
   constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, private api: ApiConversaoMoedasService, private historicoConversao: HistoricoConversaoService) {
     this.getHistorico()
@@ -52,18 +43,12 @@ export class HistoricoConversaoComponent implements AfterViewInit {
 
   getHistorico() {
     let historico = this.historicoConversao.getHistorico()
-    if (historico) {
-      this.dataSource = new MatTableDataSource(historico)
-    } else {
-      this.dataSource = new MatTableDataSource([])
-
-    }
+    this.dataSource.data = historico 
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.verificarAltoValorConvertido()
   }
 
   delHistorico() {
@@ -82,36 +67,6 @@ export class HistoricoConversaoComponent implements AfterViewInit {
     this.getHistorico()
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.verificarAltoValorConvertido()
-  }
-
-  verificarAltoValorConvertido() {
-    this.dataSource.data.forEach(
-      (row: { result: any; moedaDestino: any; }) => {
-        let i = this.dataSource.data.indexOf(row)
-        let valor = row.result
-        let moeda = row.moedaDestino;
-        if (moeda != "USD") {
-          var res: any;
-          this.api.converterMoeda(valor.toString(), moeda, "USD")
-            .subscribe(response => {
-              res = response
-              if (res.result > 10000) {
-                this.exibirIconeAltoValorConvertido(valor, i)
-              }
-            });
-        }
-      }
-    );
-
-  }
-
-  exibirIconeAltoValorConvertido(valor: number, index: number) {
-    let html = <HTMLInputElement>document.getElementById(`res${index}`)
-    if (html) {
-      html.innerHTML = `${valor} <i title="Valor convertido maior que 10.000 USD" class="bi bi-exclamation-diamond-fill text-warning"></i>`
-    }
-
   }
 
   openSnackBar() {
@@ -129,7 +84,6 @@ export class HistoricoConversaoComponent implements AfterViewInit {
         this.delHistorico()
       }
     });
-
   }
 
   openDialogExcluirConversao(index: number) {
@@ -139,6 +93,5 @@ export class HistoricoConversaoComponent implements AfterViewInit {
         this.delConversao(index)
       }
     });
-
   }
 }
