@@ -18,7 +18,7 @@ import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-c
 export class ListarSimbolosComponent implements OnInit {
   displayedColumns: string[] = ['code', 'description'];
 
-  @ViewChild(MatPaginator) paginator: any = MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
 
   simbolos: IMoedas[] = [];
