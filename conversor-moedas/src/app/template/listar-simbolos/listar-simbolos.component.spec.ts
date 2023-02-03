@@ -70,6 +70,17 @@ describe('ListarSimbolosComponent', () => {
 
   });
 
+  it('should filter the dataSource', () => {
+
+    const input: HTMLInputElement = (fixture.nativeElement.querySelectorAll('input'))[0]
+    input.value = "EUR"
+    input.dispatchEvent(new KeyboardEvent('keyup'))
+    expect(component.dataSource.filter).toBe('eur');
+    let res = component.dataSource._filterData(component.dataSource.data)
+    expect(res).toEqual([{ description: "Euro", code: "EUR" }])
+
+  });
+
   /**
    * Paginator
   */
@@ -98,6 +109,33 @@ describe('ListarSimbolosComponent', () => {
     expect(paginator.pageSize).toBe(5);
     paginator.pageSize = 25;
     expect(component.dataSource.paginator?.pageSize).toBe(25);
+
+  });
+
+  /**
+   * Filter input
+   */
+
+  it('should load input ', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    expect(inputs.length).toBe(1);
+  });
+
+  it('should be able to set value of input', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    input.value = 'CAD';
+
+    expect(input.value).toBe('CAD');
+  });
+
+  it('should be able to get type of input', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    expect(inputs.length).toBe(1);
+    const input: HTMLInputElement = inputs[0];
+    expect(input.type).toBe('text');
 
   });
 
