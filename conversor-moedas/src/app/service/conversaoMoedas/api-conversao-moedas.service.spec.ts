@@ -36,7 +36,6 @@ describe('ApiConversaoMoedasService', () => {
 
   it('should return expected symbols (HttpClient called once)', (done: DoneFn) => {
     let mockData = new MockApiService().mockApiServiceSimbolos
-    console.log(httpClientSpy)
     httpClientSpy.get.and.returnValue(of(mockData))
 
     service.getSimbolos().subscribe({
@@ -53,7 +52,6 @@ describe('ApiConversaoMoedasService', () => {
   
   it('should return expected currency (HttpClient called once)', (done: DoneFn) => {
     let mockData = new MockApiService().mockApiServiceConversao
-    console.log(httpClientSpy)
     httpClientSpy.get.and.returnValue(of(mockData))
 
     service.converterMoeda(150, "BRL", "USD").subscribe({
