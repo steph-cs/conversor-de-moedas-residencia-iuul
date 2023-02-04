@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
@@ -12,19 +12,13 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { of } from 'rxjs';
-
 import { HistoricoConversaoComponent } from './historico-conversao.component';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 describe('HistoricoConversaoComponent', () => {
   let component: HistoricoConversaoComponent;
   let fixture: ComponentFixture<HistoricoConversaoComponent>;
   let service: HistoricoConversaoService;
   let loader: HarnessLoader;
-  let overlayContainer: OverlayContainer;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,8 +29,7 @@ describe('HistoricoConversaoComponent', () => {
         MatDialogModule,
         HttpClientModule,
         MatPaginatorModule,
-        MatTableModule,
-        MatButtonModule
+        MatTableModule
       ],
       providers: [
         {
@@ -52,15 +45,6 @@ describe('HistoricoConversaoComponent', () => {
     fixture.detectChanges();
     service = TestBed.inject(HistoricoConversaoService)
     loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
-    overlayContainer = TestBed.inject(OverlayContainer);
-  });
-
-
-  afterEach(async () => {
-    const dialogs = await loader.getAllHarnesses(MatDialogHarness);
-
-    await Promise.all(dialogs.map(async (d: MatDialogHarness) => await d.close()));
-    overlayContainer.ngOnDestroy();
   });
 
   it('should create', () => {
@@ -161,26 +145,26 @@ describe('HistoricoConversaoComponent', () => {
 
   });
 
-    /**
-   * Dialog conversao
-   */
-    it('should load harness for dialog', async () => {
-      component.openDialogExcluirConversao(0);
-      const dialogs = await loader.getAllHarnesses(MatDialogHarness);
-      expect(dialogs.length).toBe(1);
-    });
-  
-    it('should be able to close dialog', async () => {
-      component.openDialogExcluirConversao(0);
-      let dialogs = await loader.getAllHarnesses(MatDialogHarness);
-  
-      expect(dialogs.length).toBe(1);
-      await dialogs[0].close();
-  
-      dialogs = await loader.getAllHarnesses(MatDialogHarness);
-      expect(dialogs.length).toBe(0);
-  
-    });
+  /**
+ * Dialog conversao
+ */
+  it('should load harness for dialog', async () => {
+    component.openDialogExcluirConversao(0);
+    const dialogs = await loader.getAllHarnesses(MatDialogHarness);
+    expect(dialogs.length).toBe(1);
+  });
+
+  it('should be able to close dialog', async () => {
+    component.openDialogExcluirConversao(0);
+    let dialogs = await loader.getAllHarnesses(MatDialogHarness);
+
+    expect(dialogs.length).toBe(1);
+    await dialogs[0].close();
+
+    dialogs = await loader.getAllHarnesses(MatDialogHarness);
+    expect(dialogs.length).toBe(0);
+
+  });
 
   /**
    * Exclusao historico 
