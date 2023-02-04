@@ -1,4 +1,5 @@
 import { Observable, of } from "rxjs";
+import { IConversao } from "../interface/IConversao";
 import { ISimbolos } from "../interface/ISimbolos";
 
 export class MockApiService {
@@ -177,13 +178,27 @@ export class MockApiService {
     "ZWL": { "description": "Zimbabwean Dollar", "code": "ZWL" }
   }
 
-  mockApiServiceData: ISimbolos = {
+  mockApiServiceSimbolos: ISimbolos = {
     motd: { msg: "msg", url: "url" },
     success: true,
     symbols: Object.values(this.requestApi)
   }
 
+  mockApiServiceConversao: IConversao = {
+    motd: { msg: "msg", url: "url"},
+    date: "03/02/2023",
+    historical: false,
+    info: { rate: 0.1942 },
+    query: { from: "BRL", to: "USD", amount: 150 },
+    result: 29.129951,
+    success: true
+  }
+
   getSimbolos(): Observable<ISimbolos> {
-    return of(this.mockApiServiceData)
+    return of(this.mockApiServiceSimbolos)
+  }
+
+  converterMoeda(): Observable<IConversao> {
+    return of(this.mockApiServiceConversao)
   }
 }
