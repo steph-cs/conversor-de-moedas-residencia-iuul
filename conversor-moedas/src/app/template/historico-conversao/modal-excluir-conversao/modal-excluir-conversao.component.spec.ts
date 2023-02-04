@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ModalExcluirConversaoComponent } from './modal-excluir-conversao.component';
 
@@ -8,9 +9,10 @@ describe('ModalExcluirConversaoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalExcluirConversaoComponent ]
+      declarations: [ModalExcluirConversaoComponent],
+      imports: [MatDialogModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ModalExcluirConversaoComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,5 @@
 
 import { IHistoricoConversao } from 'src/app/interface/IHistoricoConversao';
-import { ISimbolos } from '../interface/ISimbolos';
 
 export class MockHistoricoConversaoService {
 
@@ -39,6 +38,29 @@ export class MockHistoricoConversaoService {
   ]
   getHistorico(): IHistoricoConversao[] {
     return this.mockHistoricoConversao
+  }
+
+  delHistorico() {
+
+  }
+
+  delConversao(index: number) {
+
+  }
+
+  refresh() {
+  }
+
+  openSnackBar() {
+
+  }
+
+  openDialogExcluirHistorico() {
+
+  }
+
+  openDialogExcluirConversao(index: number) {
+
   }
 
 }

@@ -6,49 +6,49 @@
 
       <!-- data Column -->
       <ng-container matColumnDef="data">
-        <th mat-header-cell *matHeaderCellDef> Data </th>
-        <td mat-cell *matCellDef="let row"> {{row.data}} </td>
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let row">{{row.data}}</td>
       </ng-container>
 
       <!-- hora Column -->
       <ng-container matColumnDef="hora">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
-        <td mat-cell *matCellDef="let row"> {{row.hora}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora</th>
+        <td mat-cell *matCellDef="let row">{{row.hora}}</td>
       </ng-container>
 
       <!-- valor Column -->
       <ng-container matColumnDef="valor">
-        <th mat-header-cell *matHeaderCellDef> Valor </th>
-        <td mat-cell *matCellDef="let row"> {{row.valor}} </td>
+        <th mat-header-cell *matHeaderCellDef>Valor</th>
+        <td mat-cell *matCellDef="let row">{{row.valor}}</td>
       </ng-container>
 
       <!-- moedaOrigem Column -->
       <ng-container matColumnDef="moedaOrigem">
-        <th mat-header-cell *matHeaderCellDef> Moeda Origem </th>
-        <td mat-cell *matCellDef="let row"> {{row.moedaOrigem}} </td>
+        <th mat-header-cell *matHeaderCellDef>Moeda Origem</th>
+        <td mat-cell *matCellDef="let row">{{row.moedaOrigem}}</td>
       </ng-container>
 
       <!-- moedaDestino Column -->
       <ng-container matColumnDef="moedaDestino">
-        <th mat-header-cell *matHeaderCellDef> Moeda Destino </th>
-        <td mat-cell *matCellDef="let row"> {{row.moedaDestino}} </td>
+        <th mat-header-cell *matHeaderCellDef>Moeda Destino</th>
+        <td mat-cell *matCellDef="let row">{{row.moedaDestino}}</td>
       </ng-container>
 
       <!-- result Column -->
       <ng-container matColumnDef="result">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Resultado </th>
-        <td mat-cell *matCellDef="let row" [id]="'res' + dataSource.data.indexOf(row)" > {{row.result}} <i *ngIf="row.altoValor" title="Valor convertido maior que 10.000 USD" class="bi bi-exclamation-diamond-fill text-warning"></i>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Resultado</th>
+        <td mat-cell *matCellDef="let row" [id]="'res' + dataSource.data.indexOf(row)" >{{row.result}}<i *ngIf="row.altoValor" title="Valor convertido maior que 10.000 USD" class="bi bi-exclamation-diamond-fill text-warning"></i>
         </td>
       </ng-container>
 
       <!-- rate Column -->
       <ng-container matColumnDef="rate">
-        <th mat-header-cell *matHeaderCellDef> Taxa </th>
-        <td mat-cell *matCellDef="let row"> {{row.rate}} </td>
+        <th mat-header-cell *matHeaderCellDef>Taxa</th>
+        <td mat-cell *matCellDef="let row">{{row.rate}}</td>
       </ng-container>
 
       <ng-container matColumnDef="excluir">
-        <th mat-header-cell *matHeaderCellDef> Excluir </th>
+        <th mat-header-cell *matHeaderCellDef>Excluir</th>
         <td mat-cell *matCellDef="let row"> 
           <button (click)="openDialogExcluirConversao(dataSource.data.indexOf(row))" type="button" class="btn btn-secondary">
             <i class="bi bi-trash3"></i> 

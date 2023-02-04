@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
+
 import { SnackBarExclusaoComponent } from './snack-bar-exclusao.component';
 
 describe('SnackBarExclusaoComponent', () => {
@@ -8,9 +10,14 @@ describe('SnackBarExclusaoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SnackBarExclusaoComponent ]
+      declarations: [SnackBarExclusaoComponent],
+      imports: [MatSnackBarModule],
+      providers: [{
+        provide: MatSnackBarRef,
+        useValue: {}
+      }]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SnackBarExclusaoComponent);
     component = fixture.componentInstance;
