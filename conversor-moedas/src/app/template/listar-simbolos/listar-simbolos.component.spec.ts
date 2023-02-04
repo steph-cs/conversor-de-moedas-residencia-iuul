@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-conversao-moedas.service';
 import { MockApiService } from 'src/app/mock/MockApiConversaoService';
-import { By } from '@angular/platform-browser';
 
 describe('ListarSimbolosComponent', () => {
   let component: ListarSimbolosComponent;
@@ -50,7 +49,7 @@ describe('ListarSimbolosComponent', () => {
    * 
   */
   it('should load a table', () => {
-    const tables = fixture.debugElement.queryAll(By.css("table"))
+    const tables = fixture.nativeElement.querySelectorAll("table")
     expect(tables.length).toBe(1);
   });
 
