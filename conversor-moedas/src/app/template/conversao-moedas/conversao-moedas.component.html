@@ -33,7 +33,7 @@
     <button class="btn btn-success mt-2" (click)="converterMoeda()">Converter</button>
   </form>
 
-  <div class=" mt-5 p-3 w-75 d-flex flex-column align-items-center" *ngIf="resConversao != null">
+  <div id="resConversao" class=" mt-5 p-3 w-75 d-flex flex-column align-items-center" *ngIf="resConversao != null">
     <p id="valor-origem">{{resConversao.valor}} {{resConversao.moedaOrigem}}</p>
     <h2 class="text-primary fs-2 fw-bold" id=" valor-destino">{{resConversao.result}} {{resConversao.moedaDestino}} </h2>
     <p>taxa de conversão: <span class="text-danger" id="rate">{{resConversao.rate}}</span></p>

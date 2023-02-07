@@ -1,7 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockApiService } from 'src/app/mock/MockApiConversaoService';
+import { MockResConversao } from 'src/app/mock/MockResConversao';
 import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-conversao-moedas.service';
 
 import { ConversaoMoedasComponent } from './conversao-moedas.component';
@@ -14,7 +16,9 @@ describe('ConversaoMoedasComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ConversaoMoedasComponent],
-      imports: [MatSnackBarModule,
+      imports: [
+        BrowserAnimationsModule,
+        MatSnackBarModule,
         HttpClientModule
       ],
       providers: [{ provide: ApiConversaoMoedasService, useClass: MockApiService }]
@@ -29,22 +33,6 @@ describe('ConversaoMoedasComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  /**
-   * Erro valor
-  */
-
-  it('should show an error message value less or equal than 0', () => {
-    component.showError(-5)
-    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
-    expect(error.classList.contains('d-none')).toEqual(false)
-  });
-
-  it('should hide error message value greater than 0', () => {
-    component.showError(15)
-    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
-    expect(error.classList.contains('d-none')).toEqual(true)
   });
 
   /**
@@ -75,6 +63,55 @@ describe('ConversaoMoedasComponent', () => {
   });
 
   /**
+   * Erro msg 
+  */
+  it('should be able to convert only values greater than 0', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    //valor > 0
+    input.value = '1';
+    expect(input.value).toBe('1');
+
+    //msg erro = n exibida
+    component.converterMoeda();
+    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
+    expect(error.classList.contains('d-none')).toEqual(true)
+  });
+
+  it('should show error message value equal 0', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    //valor == 0
+    input.value = '0';
+    expect(input.value).toBe('0');
+
+    //msg erro = exibida
+    component.converterMoeda();
+    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
+    expect(error.classList.contains('d-none')).toEqual(false)
+  });
+
+  it('should show error message value less than 0', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    //valor < 0
+    input.value = '-1';
+    expect(input.value).toBe('-1');
+
+    //msg erro = exibida
+    component.converterMoeda();
+    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
+    expect(error.classList.contains('d-none')).toEqual(false)
+
+  });
+
+  /**
    * Selects simbolos
   */
 
@@ -99,5 +136,50 @@ describe('ConversaoMoedasComponent', () => {
     expect(select2.value).toEqual('USD')
   });
 
+
+  /**
+   * Resultado conversao 
+  */
+
+  it('should be able to convert only values greater than 0', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    //valor > 0
+    input.value = '150';
+    expect(input.value).toBe('150');
+
+    //msg erro = n exibida
+    component.converterMoeda();
+    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
+    expect(error.classList.contains('d-none')).toEqual(true)
+
+    //exibido div #resConversao ; resConversao: IHistoricoConversao
+    let resConversao: HTMLElement = fixture.nativeElement.querySelector('#resConversao')
+    let mockData = new MockResConversao().mockResConversao
+    expect(resConversao).toBeDefined()
+    expect(component.resConversao).toEqual(mockData)
+  });
+
+  it('should dont convert value less than 0', () => {
+    const inputs = (fixture.nativeElement.querySelectorAll('input'))
+    const input: HTMLInputElement = inputs[0];
+    expect(input.value).toBe('');
+
+    //valor > 0
+    input.value = '0';
+    expect(input.value).toBe('0');
+
+    //msg erro = n exibida
+    component.converterMoeda();
+    let error: HTMLElement = fixture.nativeElement.querySelectorAll('form span#valor-error')[0]
+    expect(error.classList.contains('d-none')).toEqual(false)
+
+    //n exibido div #resConversao ; resConversao = null
+    let resConversao: HTMLElement = fixture.nativeElement.querySelector('#resConversao')
+    expect(resConversao).toBeNull()
+    expect(component.resConversao).toBeNull()
+  });
 
 });
