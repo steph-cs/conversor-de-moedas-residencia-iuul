@@ -169,13 +169,19 @@ describe('HistoricoConversaoComponent', () => {
   /**
    * Exclusao historico 
   */
-  it('should call openDialog', () => {
-
+  it('should delete the currencies', () => {
+    component.delHistorico();
+    let historico = component.dataSource.data
+    expect(historico.length).toEqual(0)
   })
 
 
   /**
    * Exclusao conversao 
   */
-  it('should ', () => { });
+  it('should delete one currency', () => { 
+    component.delConversao(1);
+    let historico = component.dataSource.data
+    expect(historico.length).toEqual(2)
+  });
 });

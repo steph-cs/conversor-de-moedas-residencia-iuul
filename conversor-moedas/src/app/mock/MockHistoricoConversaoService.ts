@@ -41,11 +41,11 @@ export class MockHistoricoConversaoService {
   }
 
   delHistorico() {
-
+    this.mockHistoricoConversao = []
   }
 
   delConversao(index: number) {
-
+    this.mockHistoricoConversao.splice(index, 1);
   }
 
   refresh() {

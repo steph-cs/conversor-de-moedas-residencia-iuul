@@ -48,7 +48,7 @@ export class HistoricoConversaoService {
 
   delHistorico() {
     if (localStorage["historicoConversao"]) {
-      localStorage.removeItem("historicoConversao")
+      localStorage.setItem("historicoConversao", "[]")
     }
   }
 }
