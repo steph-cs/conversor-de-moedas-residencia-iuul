@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-conversao-moedas.service';
 import { MockApiService } from 'src/app/mock/MockApiConversaoService';
+import { MatSortModule } from '@angular/material/sort';
 
 describe('ListarSimbolosComponent', () => {
   let component: ListarSimbolosComponent;
@@ -24,6 +25,8 @@ describe('ListarSimbolosComponent', () => {
         BrowserAnimationsModule,
         MatFormFieldModule,
         MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
         MatTableModule,
         MatInputModule
       ],
@@ -58,14 +61,15 @@ describe('ListarSimbolosComponent', () => {
     // Header row
     let headerRows = (fixture.nativeElement.querySelectorAll('table thead tr'))
     expect(headerRows.length).toBe(1);
-    let headerRow = headerRows[0];
 
-    expect(headerRow.cells[0].innerHTML).toBe("Código")
-    expect(headerRow.cells[1].innerHTML).toBe("Descrição")
+    let headers = (fixture.nativeElement.querySelectorAll('table thead tr .mat-sort-header-content'));
+
+    expect(headers[0].innerHTML).toBe("Código")
+    expect(headers[1].innerHTML).toBe("Descrição")
 
     // Data rows
     let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
-    expect(tableRows.length).toBe(171);
+    expect(tableRows.length).toBe(5);
 
   });
 
@@ -75,10 +79,29 @@ describe('ListarSimbolosComponent', () => {
     input.value = "EUR"
     input.dispatchEvent(new KeyboardEvent('keyup'))
     expect(component.dataSource.filter).toBe('eur');
-    let res = component.dataSource._filterData(component.dataSource.data)
-    expect(res).toEqual([{ description: "Euro", code: "EUR" }])
+    fixture.detectChanges();
+
+    // Data rows
+    let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
+    expect(tableRows.length).toBe(1);
 
   });
+
+  it('should message filter not found', () => {
+
+    const input: HTMLInputElement = (fixture.nativeElement.querySelectorAll('input'))[0]
+    input.value = "test"
+    input.dispatchEvent(new KeyboardEvent('keyup'))
+    expect(component.dataSource.filter).toBe('test');
+    fixture.detectChanges();
+
+    // Data rows
+    let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
+    expect(tableRows.length).toBe(1);
+    expect(tableRows[0].cells[0].innerHTML).toEqual('Nenhum resultado encontrado: "test"')
+
+  });
+
 
   /**
    * Paginator
@@ -100,14 +123,25 @@ describe('ListarSimbolosComponent', () => {
     expect(paginator.pageIndex).toBe(0);
     paginator.lastPage();
     expect(paginator.pageIndex).toBe(34);
+
+    fixture.detectChanges()
+    // Data rows
+    let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
+    expect(tableRows.length).toBe(1);
   });
 
   it('should be able to set the page size', () => {
     const paginator: MatPaginator = component.paginator
 
     expect(paginator.pageSize).toBe(5);
-    paginator.pageSize = 25;
+    paginator._changePageSize(25)
+    fixture.detectChanges()
+
     expect(component.dataSource.paginator?.pageSize).toBe(25);
+    // Data rows
+    let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
+    expect(tableRows.length).toBe(25);
+
 
   });
 
@@ -135,6 +169,27 @@ describe('ListarSimbolosComponent', () => {
     expect(inputs.length).toBe(1);
     const input: HTMLInputElement = inputs[0];
     expect(input.type).toBe('text');
+
+  });
+
+  /**
+   * Sort
+  */
+
+  it('should sort the dataSource', () => {
+    const buttons = (fixture.nativeElement.querySelectorAll('thead tr [role="button"]'))
+    expect(buttons.length).toBe(2);
+    let sort = component.dataSource.sort
+    let btnCode: HTMLButtonElement = buttons[0]
+    btnCode.click()
+    btnCode.click()
+
+    fixture.detectChanges()
+    expect(sort?.direction).toEqual("desc")
+
+    // Data rows
+    let tableRows = (fixture.nativeElement.querySelectorAll('table tbody tr'))
+    expect(tableRows[0].cells[0].innerHTML).toBe("ZWL");
 
   });
 

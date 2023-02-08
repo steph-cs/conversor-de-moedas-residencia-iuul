@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { ApiConversaoMoedasService } from 'src/app/service/conversaoMoedas/api-c
   templateUrl: './listar-simbolos.component.html',
   styleUrls: ['./listar-simbolos.component.css']
 })
-export class ListarSimbolosComponent implements OnInit {
+export class ListarSimbolosComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['code', 'description'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: any = MatPaginator;
@@ -27,13 +27,17 @@ export class ListarSimbolosComponent implements OnInit {
   constructor(private api: ApiConversaoMoedasService) {
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort; 
+  }
+
   ngOnInit() {
     this.api.getSimbolos()
       .subscribe(response => {
         this.simbolos = Object.values(response.symbols)
         this.dataSource.data = this.simbolos;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+
       });
   }
 
