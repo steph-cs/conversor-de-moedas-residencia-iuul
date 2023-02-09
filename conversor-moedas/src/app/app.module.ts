@@ -18,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 import { FormsModule } from '@angular/forms';
 import { ConversaoMoedasComponent } from './template/conversao-moedas/conversao-moedas.component';
@@ -56,7 +57,8 @@ import { SnackBarConversaoComponent } from './template/conversao-moedas/snack-ba
     FormsModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

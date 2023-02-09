@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-excluir-conversao',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class ModalExcluirConversaoComponent {
 
+  constructor(
+    private dialogRef: MatDialogRef<ModalExcluirConversaoComponent>
+  ) {}
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  delete() {
+    this.dialogRef.close(true);
+  }
 }

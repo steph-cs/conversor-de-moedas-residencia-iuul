@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
@@ -8,17 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockHistoricoConversaoService } from 'src/app/mock/MockHistoricoConversaoService';
 import { HistoricoConversaoService } from 'src/app/service/historicoConversao/historico-conversao.service';
 
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatDialogHarness } from '@angular/material/dialog/testing';
-import { HarnessLoader } from '@angular/cdk/testing';
-
 import { HistoricoConversaoComponent } from './historico-conversao.component';
 
 describe('HistoricoConversaoComponent', () => {
   let component: HistoricoConversaoComponent;
   let fixture: ComponentFixture<HistoricoConversaoComponent>;
   let service: HistoricoConversaoService;
-  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,12 +25,17 @@ describe('HistoricoConversaoComponent', () => {
         MatDialogModule,
         HttpClientModule,
         MatPaginatorModule,
-        MatTableModule
+        MatTableModule,
+        MatButtonModule
       ],
       providers: [
         {
           provide: HistoricoConversaoService,
           useClass: MockHistoricoConversaoService
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {}
         }
       ]
     })
@@ -44,7 +45,6 @@ describe('HistoricoConversaoComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     service = TestBed.inject(HistoricoConversaoService)
-    loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   it('should create', () => {
@@ -127,43 +127,37 @@ describe('HistoricoConversaoComponent', () => {
   /**
    * Dialog historico
    */
-  it('should load harness for dialog', async () => {
-    component.openDialogExcluirHistorico();
-    const dialogs = await loader.getAllHarnesses(MatDialogHarness);
-    expect(dialogs.length).toBe(1);
-  });
 
-  it('should be able to close dialog', async () => {
-    component.openDialogExcluirHistorico();
-    let dialogs = await loader.getAllHarnesses(MatDialogHarness);
+  it('should be able to open dialog Historico', () => {
+    let modal = document.querySelectorAll('app-modal-excluir-historico h2')[0];
+    expect(modal).toBeUndefined()
 
-    expect(dialogs.length).toBe(1);
-    await dialogs[0].close();
+    //btn excluir historico
+    let btn: HTMLButtonElement = fixture.nativeElement.querySelector('button.btn.btn-danger')
+    btn.click()
+    fixture.detectChanges()
 
-    dialogs = await loader.getAllHarnesses(MatDialogHarness);
-    expect(dialogs.length).toBe(0);
-
+    //modal aberto
+    modal = document.querySelectorAll('app-modal-excluir-historico h2')[0];
+    expect(modal.innerHTML).toEqual('Excluir histórico')
   });
 
   /**
  * Dialog conversao
  */
-  it('should load harness for dialog', async () => {
-    component.openDialogExcluirConversao(0);
-    const dialogs = await loader.getAllHarnesses(MatDialogHarness);
-    expect(dialogs.length).toBe(1);
-  });
 
-  it('should be able to close dialog', async () => {
-    component.openDialogExcluirConversao(0);
-    let dialogs = await loader.getAllHarnesses(MatDialogHarness);
+  it('should be able to open dialog Conversao', () => {
+    let modal = document.querySelectorAll('app-modal-excluir-conversao h2')[0];
+    expect(modal).toBeUndefined()
 
-    expect(dialogs.length).toBe(1);
-    await dialogs[0].close();
+    //btn excluir conversao 1
+    let btn1: HTMLButtonElement = (fixture.nativeElement.querySelectorAll('.mat-column-excluir .btn.btn-secondary'))[1]
+    btn1.click()
+    fixture.detectChanges()
 
-    dialogs = await loader.getAllHarnesses(MatDialogHarness);
-    expect(dialogs.length).toBe(0);
-
+    //modal aberto
+    modal = document.querySelectorAll('app-modal-excluir-conversao h2')[0];
+    expect(modal.innerHTML).toEqual('Excluir conversão')
   });
 
   /**
@@ -179,7 +173,7 @@ describe('HistoricoConversaoComponent', () => {
   /**
    * Exclusao conversao 
   */
-  it('should delete one currency', () => { 
+  it('should delete one currency', () => {
     component.delConversao(1);
     let historico = component.dataSource.data
     expect(historico.length).toEqual(2)
