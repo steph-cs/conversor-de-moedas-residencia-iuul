@@ -59,7 +59,7 @@ export class ConversaoMoedasComponent implements OnInit {
   verificarAltoValorConvertido(resConversao: IHistoricoConversao) {
     //se moeda !USD
     if (resConversao.moedaDestino != "USD") {
-      this.api.converterMoeda(resConversao.valor, resConversao.moedaDestino, "USD")
+      this.api.converterMoeda(resConversao.result, resConversao.moedaDestino, "USD")
         .subscribe(response => {
           //valor > 10000 USD
           if (response.result > 10000) {
@@ -73,7 +73,7 @@ export class ConversaoMoedasComponent implements OnInit {
     //moeda == USD
     else {
       //valor > 10000 USD
-      if (resConversao.valor > 10000) {
+      if (resConversao.result > 10000) {
         resConversao.altoValor = true
       }
       //add conversao ao historico
