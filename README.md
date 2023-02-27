@@ -3,7 +3,7 @@
 
 <p>
 Aplicação em Angular para realização de conversão de valores monetários entre diferentes moedas.
-A aplicação consome o serviço de conversão de moedas exchangerate: https://exchangerate.host/.
+A aplicação consome o serviço de conversão de moedas exchangerate: <a href="https://exchangerate.host/" target="_blank">https://exchangerate.host/</a>.
 </p>
 <p>
 Projeto visando a prática com a linguagem TypeScript; criação de aplicações, componentes e consumo de serviços com Angular e criação de testes automatizados.
