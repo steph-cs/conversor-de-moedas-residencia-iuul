@@ -1,6 +1,8 @@
 ## Residência IUUL - Desafio 04: Desenvolvimento de aplicação Angular
 # ![dollar](https://user-images.githubusercontent.com/61119367/221638470-79b1cf05-90da-4de1-9a8e-8a699cdb133d.png) Conversor de Moedas
 
+### ⚠️ API INDISPONÍVEL: a api teve atualizações e passou a ser paga ⚠️
+
 <p>
 Aplicação em Angular para realização de conversão de valores monetários entre diferentes moedas.
 A aplicação consome o serviço de conversão de moedas exchangerate: <a href="https://exchangerate.host/" target="_blank">https://exchangerate.host/</a>.
